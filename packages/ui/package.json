@@ -34,8 +34,7 @@
     "@workspace/typescript": "workspace:*",
     "postcss": "^8.5.3",
     "react": "^19.0.0",
-    "tailwindcss": "^4.0.8",
-    "typescript": "^5.7.3"
+    "tailwindcss": "^4.0.8"
   },
   "exports": {
     "./postcss.config": "./postcss.config.mjs",
