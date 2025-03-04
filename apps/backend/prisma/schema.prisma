@@ -13,10 +13,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  ADMIN
+  STUDENT
+}
+
+model User {
+  id       String   @id @default(uuid())
+  name     String
+  role     UserRole
+  email    String   @unique
+  username String   @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
 model School {
   id   String @id @default(uuid())
   name String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("schools")
 }
