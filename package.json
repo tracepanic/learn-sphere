@@ -17,9 +17,9 @@
     "@workspace/prettier": "workspace:*",
     "@workspace/typescript": "workspace:*",
     "turbo": "^2.4.2",
-    "typescript": "5.7.3"
+    "typescript": "5.8.2"
   },
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@10.5.2",
   "engines": {
     "node": ">=20"
   }
