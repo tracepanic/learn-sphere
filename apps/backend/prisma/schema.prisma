@@ -19,11 +19,12 @@ enum UserRole {
 }
 
 model User {
-  id       String   @id @default(uuid())
+  id       String     @id @default(uuid())
   name     String
-  role     UserRole
-  email    String   @unique
-  username String   @unique
+  roles    UserRole[]
+  email    String     @unique
+  username String     @unique
+  password String
 
   adminAt SchoolAdmins[]
 
