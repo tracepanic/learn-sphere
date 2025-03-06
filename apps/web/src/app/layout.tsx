@@ -18,6 +18,7 @@ const banner = (
 
 const navbar = (
   <Navbar
+    projectLink="https://github.com/tracepanic/learn-sphere"
     logo={
       <div className="flex items-center gap-2">
         <Presentation />
@@ -47,6 +48,8 @@ export default async function RootLayout({
           navbar={navbar}
           pageMap={await getPageMap()}
           docsRepositoryBase="https://github.com/tracepanic/learn-sphere/tree/main/apps/web"
+          editLink="Edit this page on GitHub"
+          sidebar={{ defaultMenuCollapseLevel: 1 }}
           footer={footer}
         >
           {children}
