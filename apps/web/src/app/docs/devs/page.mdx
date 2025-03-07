@@ -1,0 +1,62 @@
+import {
+  CheckCircle,
+  Component,
+  FileCode,
+  GitPullRequest,
+  Network,
+  Workflow,
+} from "lucide-react";
+import { Cards } from "nextra/components";
+
+# Developer Documentation Introduction
+
+Welcome to the Learn Sphere developer documentation! This guide is designed for
+developers who want to contribute to the Learn Sphere project, customize the
+platform to meet specific requirements, or integrate it with other systems.
+
+## Getting Started with Development
+
+Learn Sphere is built using modern web technologies with a focus on performance,
+accessibility, and developer experience. Our codebase is organized as a monorepo
+using a component-based architecture that makes it easy to understand and
+extend.
+
+### What You'll Find in This Documentation
+
+- **Setup Guide**: Instructions for setting up your local development
+  environment
+- **Architecture Overview**: Detailed explanations of our technical architecture
+  and design decisions
+- **Internals**: Deep dives into Learn Sphere's core systems and implementation
+  details
+- **API Reference**: Comprehensive documentation of our APIs for integration and
+  extension
+- **Contribution Guidelines**: How to contribute code, report bugs, and suggest
+  new features
+- **Best Practices**: Coding standards and patterns we follow in the Learn
+  Sphere project
+
+## Pre-requisites
+
+To work with the Learn Sphere codebase, you should have:
+
+- Basic knowledge of `TypeScript`, `React`, `Nest.js` and `Next.js`
+- Familiarity with `Node.js` and `pnpm`
+- Understanding of Git and GitHub workflows
+
+## Join the Developer Community
+
+We value every contribution, whether it's code, documentation, or bug reports.
+Join our developer community to share ideas, ask questions, and collaborate on
+making Learn Sphere better for everyone.
+
+Ready to dive in? Get started using the quick links below.
+
+<Cards>
+  <Cards.Card icon={<Workflow />} title="Setup Guide" href="#" />
+  <Cards.Card icon={<Network />} title="Project Architecture" href="#" />
+  <Cards.Card icon={<FileCode />} title="API Reference" href="#" />
+  <Cards.Card icon={<Component />} title="Internals" href="#" />
+  <Cards.Card icon={<GitPullRequest />} title="Contribution" href="#" />
+  <Cards.Card icon={<CheckCircle />} title="Best Practices" href="#" />
+</Cards>
