@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "nest build",
+    "build": "prisma generate && nest build",
     "clean": "rm -rf node_modules/ .turbo/ dist/",
     "check-types": "tsc --noEmit",
     "dev": "nest start --watch",
