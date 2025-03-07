@@ -40,4 +40,14 @@ export default {
   trailingComma: "all",
   endOfLine: "auto",
   singleQuote: false,
+  overrides: [
+    {
+      files: "*.mdx",
+      options: {
+        proseWrap: "always",
+        embeddedLanguageFormatting: "auto",
+        htmlWhitespaceSensitivity: "strict",
+      },
+    },
+  ],
 };
