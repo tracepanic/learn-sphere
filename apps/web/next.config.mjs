@@ -1,6 +1,9 @@
 import nextra from "nextra";
 
 const withNextra = nextra({
+  search: {
+    codeblocks: false,
+  },
   // ... Other Nextra config options
 });
 
