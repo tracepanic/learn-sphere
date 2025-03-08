@@ -1,4 +1,4 @@
-import { Steps } from "nextra/components";
+import { Cards, Steps } from "nextra/components";
 
 # Development Environment Setup
 
@@ -44,6 +44,11 @@ Sphere development environment. Follow the instructions in the following
 sections to clone the repository, install dependencies, and start the
 development servers.
 
+> [!NOTE]
+>
+> Want to build the LMS for production and deploy, check out the production
+> build [documentation](#)
+
 <Steps>
 
 ### Clone the Repository
@@ -78,4 +83,75 @@ git checkout -b johndoe/feature/user-authentication
 This convention helps identify who is working on what feature and keeps our
 repository organized.
 
+### Install Dependencies
+
+Install all the project dependencies using PNPM:
+
+```bash
+pnpm install
+```
+
+This command will install dependencies for all packages and applications in the
+monorepo.
+
+### Configure Environment
+
+Learn Sphere uses different applications which may require specific
+configurations. Make sure to set up your environment variables according to
+these guides before proceeding.
+
+<Cards>
+  <Cards.Card title="LMS Backend" href="#" />
+  <Cards.Card title="LMS Web Client" href="#" />
+  <Cards.Card title="Learn Sphere Website" href="#" />
+</Cards>
+
+### Start Development Server
+
+We use Turborepo to manage our monorepo. To start all development servers
+simultaneously:
+
+```bash
+pnpm turbo dev
+```
+
+This will start the development servers for all applications in the monorepo.
+
+### Other Common Commands
+
+Learn Sphere provides several utility commands for development:
+
+#### Code Quality
+
+```bash
+# Run linting across all projects
+pnpm turbo lint
+
+# Format code with Prettier
+pnpm turbo format
+
+# Type check all TypeScript code
+pnpm turbo check-types
+```
+
+#### Cleaning Up
+
+```bash
+# Clean build artifacts and caches
+pnpm turbo clean
+```
+
+#### Updating Dependencies
+
+```bash
+# Update dependencies across all projects
+pnpm turbo update
+```
+
 </Steps>
+
+## Troubleshooting
+
+If you encounter any issues during setup, please check out our
+[Troubleshooting Guide](#) or open an issue on
+[GitHub](https://github.com/tracepanic/learn-sphere/issues/new).
