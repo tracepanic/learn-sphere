@@ -136,6 +136,7 @@ export default function Page() {
                 src="/giphy.gif"
                 width={800}
                 height={800}
+                unoptimized
                 alt="Open source collaboration"
                 className="mx-auto aspect-square overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
               />

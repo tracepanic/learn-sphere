@@ -1,0 +1,81 @@
+import { Steps } from "nextra/components";
+
+# Development Environment Setup
+
+Welcome to Learn Sphere! Our platform is built on a modern stack consisting of
+Next.js for the web client and Nest.js for the backend, with PostgreSQL serving
+as our database solution.
+
+## Prerequisites
+
+Before you begin, please ensure you have the following tools installed:
+
+### Node.js
+
+Node.js is the JavaScript runtime required to run both Next.js and Nest.js
+applications.
+
+- **Installation**: [Download Node.js](https://nodejs.org/)
+
+> [!NOTE]
+>
+> We currently don't support Bun due to compatibility issues with Nest.js, and
+> we haven't tested the application with Deno.
+
+### PNPM
+
+We use PNPM as our package manager for its efficiency and disk space savings.
+
+- **Installation**: [Install PNPM](https://pnpm.io/installation)
+
+### PostgreSQL
+
+You'll need access to a PostgreSQL database, either:
+
+- A local PostgreSQL installation
+- A remote PostgreSQL instance
+
+[PostgreSQL Downloads](https://www.postgresql.org/download/)
+
+## Getting Started
+
+Once you have installed the prerequisites, you're ready to set up the Learn
+Sphere development environment. Follow the instructions in the following
+sections to clone the repository, install dependencies, and start the
+development servers.
+
+<Steps>
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/tracepanic/learn-sphere.git
+cd learn-sphere
+```
+
+### Create Your Branch
+
+If you plan to contribute to Learn Sphere, we recommend creating your own branch
+following a good branching convention:
+
+```bash
+git checkout -b <username>/<branch-type>/<description>
+```
+
+Examples of branch types:
+
+- `feature/` - For new features
+- `fix/` - For bug fixes
+- `docs/` - For documentation updates
+- `refactor/` - For code refactoring
+
+Example:
+
+```bash
+git checkout -b johndoe/feature/user-authentication
+```
+
+This convention helps identify who is working on what feature and keeps our
+repository organized.
+
+</Steps>
