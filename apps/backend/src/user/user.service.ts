@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { User, UserRole } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from 'src/user/dto/request.dto';
 
@@ -19,7 +19,10 @@ export class UserService {
     return this.prisma.user.findUnique({ where: { username } });
   }
 
-  private async create(createUserDto: CreateUserDto): Promise<User> {
+  private async create(
+    role: UserRole,
+    createUserDto: CreateUserDto,
+  ): Promise<User> {
     const [userByEmail, userByUsername] = await Promise.all([
       this.getByEmail(createUserDto.email),
       this.getByUsername(createUserDto.username),
@@ -35,7 +38,7 @@ export class UserService {
         name: createUserDto.name,
         email: createUserDto.email,
         username: createUserDto.username,
-        roles: [createUserDto.role],
+        roles: [role],
         password: createUserDto.password,
       },
     });

@@ -1,7 +1,5 @@
-import { UserRole } from '@prisma/client';
 import {
   IsEmail,
-  IsEnum,
   IsNotEmpty,
   IsString,
   MaxLength,
@@ -26,10 +24,6 @@ export class CreateUserDto {
   @MinLength(5)
   @MaxLength(50)
   readonly username: string;
-
-  @IsNotEmpty()
-  @IsEnum(UserRole)
-  readonly role: UserRole;
 
   @IsNotEmpty()
   @IsString()
