@@ -2,11 +2,11 @@ export class BaseDto<T> {
   constructor(partial: Partial<T>) {
     if (!partial) return;
 
-    Object.keys(partial as Record<string, unknown>).forEach((key) => {
-      if (key in this) {
-        const typeSafeThis = this as Record<string, unknown>;
-        typeSafeThis[key] = (partial as Record<string, unknown>)[key];
-      }
-    });
+    // Only assign own properties, not inherited ones
+    Object.assign(this, 
+      Object.entries(partial)
+        .filter(([key]) => Object.prototype.hasOwnProperty.call(this, key))
+        .reduce((obj, [key, value]) => ({ ...obj, [key]: value }), {})
+    );
   }
 }
