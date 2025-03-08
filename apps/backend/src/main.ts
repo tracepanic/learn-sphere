@@ -1,5 +1,5 @@
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
-import { APP_INTERCEPTOR, NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from 'src/app.module';
 
 async function bootstrap() {
@@ -25,7 +25,7 @@ async function bootstrap() {
   );
 
   app.useGlobalInterceptors(
-    new ClassSerializerInterceptor(app.get(APP_INTERCEPTOR), {
+    new ClassSerializerInterceptor(app.get(Reflector), {
       // Only expose properties with @Expose decorator
       excludeExtraneousValues: true,
       // Don't expose any properties by default
