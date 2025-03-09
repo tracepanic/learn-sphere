@@ -1,9 +1,12 @@
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from 'src/app.module';
+import { LoggerService } from 'src/logger/logger.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
+
+  app.useLogger(app.get<LoggerService>(LoggerService));
 
   app.useGlobalPipes(
     new ValidationPipe({
