@@ -1,6 +1,5 @@
-import { Controller, Get, Post, SerializeOptions } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { InitRequestDto } from 'src/init/dto/request.dto';
-import { InitResponseDto } from 'src/init/dto/response.dto';
 import { InitService } from 'src/init/init.service';
 
 @Controller('init')
@@ -13,10 +12,7 @@ export class InitController {
   }
 
   @Post()
-  @SerializeOptions({
-    groups: ['user.all'],
-  })
-  async initializeLMS(dto: InitRequestDto) {
-    return new InitResponseDto(await this.initService.initializeLMS(dto));
+  async initializeLMS(@Body() dto: InitRequestDto) {
+    return this.initService.initializeLMS(dto);
   }
 }

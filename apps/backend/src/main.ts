@@ -1,5 +1,5 @@
-import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
-import { NestFactory, Reflector } from '@nestjs/core';
+import { ValidationPipe, BadRequestException } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 import { AppModule } from 'src/app.module';
 import { LoggerService } from 'src/logger/logger.service';
 
@@ -8,36 +8,46 @@ async function bootstrap() {
 
   app.useLogger(app.get<LoggerService>(LoggerService));
 
+  const isDev = process.env.NODE_ENV !== 'production';
+
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true, // Strip properties that don't have decorators
-      forbidNonWhitelisted: true, // Throw errors if non-whitelisted properties are present
-      transform: true, // Transform payloads to DTO instances
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
       transformOptions: {
-        enableImplicitConversion: false, // Disable implicit type conversion
-        exposeUnsetFields: false, // Don't expose fields that weren't explicitly set
-        excludeExtraneousValues: true, // Remove all fields not explicitly exposed
+        enableImplicitConversion: false,
+        exposeUnsetFields: false,
       },
-      forbidUnknownValues: true, // Reject payloads with unknown properties
-      stopAtFirstError: true, // Stop validation at first error for better performance
+      forbidUnknownValues: true,
+      stopAtFirstError: true,
       validationError: {
-        target: false, // Don't expose the target object in error messages
-        value: false, // Don't expose the validated value in error messages
+        target: isDev,
+        value: isDev,
+      },
+      exceptionFactory: (errors) => {
+        if (!isDev) {
+          return new BadRequestException({
+            statusCode: 400,
+            message: 'Validation failed',
+          });
+        }
+
+        const formattedErrors = errors.map((error) => ({
+          property: error.property,
+          constraints: error.constraints,
+        }));
+
+        return new BadRequestException({
+          statusCode: 400,
+          message: 'Validation failed',
+          errors: formattedErrors,
+        });
       },
     }),
   );
 
-  app.useGlobalInterceptors(
-    new ClassSerializerInterceptor(app.get(Reflector), {
-      // Only expose properties with @Expose decorator
-      excludeExtraneousValues: true,
-      // Don't expose any properties by default
-      excludePrefixes: ['__', '_', '$'],
-      enableImplicitConversion: false,
-    }),
-  );
-
-  await app.listen('8000', '0.0.0.0');
+  await app.listen(8000, '0.0.0.0');
 }
 
 void bootstrap();
