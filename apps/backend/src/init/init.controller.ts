@@ -1,6 +1,6 @@
-import { Controller, Get, Post, SerializeOptions } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Request } from 'express';
 import { InitRequestDto } from 'src/init/dto/request.dto';
-import { InitResponseDto } from 'src/init/dto/response.dto';
 import { InitService } from 'src/init/init.service';
 
 @Controller('init')
@@ -13,10 +13,9 @@ export class InitController {
   }
 
   @Post()
-  @SerializeOptions({
-    groups: ['user.all'],
-  })
-  async initializeLMS(dto: InitRequestDto) {
-    return new InitResponseDto(await this.initService.initializeLMS(dto));
+  async initializeLMS(@Req() req: Request, @Body() dto: InitRequestDto) {
+    console.log('📝 Raw Request Body:', req.body);
+    console.log('🎯 Parsed DTO:', dto);
+    return this.initService.initializeLMS(dto);
   }
 }
