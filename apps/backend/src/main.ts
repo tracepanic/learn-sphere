@@ -26,6 +26,13 @@ async function bootstrap() {
         value: isDev,
       },
       exceptionFactory: (errors) => {
+        if (!isDev) {
+          return new BadRequestException({
+            statusCode: 400,
+            message: 'Validation failed',
+          });
+        }
+
         const formattedErrors = errors.map((error) => ({
           property: error.property,
           constraints: error.constraints,

@@ -1,5 +1,4 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { InitRequestDto } from 'src/init/dto/request.dto';
 import { InitService } from 'src/init/init.service';
 
@@ -13,9 +12,7 @@ export class InitController {
   }
 
   @Post()
-  async initializeLMS(@Req() req: Request, @Body() dto: InitRequestDto) {
-    console.log('📝 Raw Request Body:', req.body);
-    console.log('🎯 Parsed DTO:', dto);
+  async initializeLMS(@Body() dto: InitRequestDto) {
     return this.initService.initializeLMS(dto);
   }
 }
