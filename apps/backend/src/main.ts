@@ -1,12 +1,9 @@
 import { ValidationPipe, BadRequestException } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from 'src/app.module';
-import { LoggerService } from 'src/logger/logger.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
-
-  app.useLogger(app.get<LoggerService>(LoggerService));
 
   const isDev = process.env.NODE_ENV !== 'production';
 

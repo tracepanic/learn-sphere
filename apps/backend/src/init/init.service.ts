@@ -2,7 +2,6 @@ import { ConflictException, Injectable } from '@nestjs/common';
 import { UserRole } from '@prisma/client';
 import { AuthService } from 'src/auth/auth.service';
 import { InitRequestDto } from 'src/init/dto/request.dto';
-import { LoggerService } from 'src/logger/logger.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { SchoolService } from 'src/school/school.service';
 import { UserService } from 'src/user/user.service';
@@ -14,7 +13,6 @@ export class InitService {
     private readonly authService: AuthService,
     private readonly userService: UserService,
     private readonly schoolService: SchoolService,
-    private readonly loggerServive: LoggerService,
   ) {}
 
   async shouldInit(): Promise<{ value: boolean }> {
@@ -57,13 +55,7 @@ export class InitService {
       });
 
       return { success: true };
-    } catch (error) {
-      this.loggerServive.errorWithMeta(
-        'LMS initialization failed',
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        { error },
-        'InitService',
-      );
+    } catch {
       return { success: false };
     }
   }
