@@ -16,7 +16,8 @@ export class InitController {
   @HttpCode(HttpStatus.OK)
   @Get()
   async shouldInit() {
-    return this.initService.shouldInit();
+    const res = await this.initService.shouldInit();
+    return { value: res };
   }
 
   @HttpCode(HttpStatus.CREATED)

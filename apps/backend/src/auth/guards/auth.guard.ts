@@ -14,7 +14,7 @@ type RequestWithUser = Request & {
 };
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthenticationGuard implements CanActivate {
   constructor(
     private jwtService: JwtService,
     private configService: ConfigService,

@@ -9,13 +9,13 @@ import {
 import { User } from '@prisma/client';
 import { Request as RequestType } from 'express';
 import { AuthService } from 'src/auth/auth.service';
-import { LocalAuthGuard } from 'src/auth/guards/local.guard';
+import { LocalAuthenticationGuard } from 'src/auth/guards/local.guard';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(LocalAuthenticationGuard)
   @HttpCode(HttpStatus.OK)
   @Post('login')
   login(@Request() req: RequestType) {
