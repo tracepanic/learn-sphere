@@ -13,20 +13,55 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum UserRole {
-  ADMIN
-  STUDENT
+enum Action {
+  READ
+  CREATE
+  UPDATE
+  DELETE
+}
+
+enum Resource {
+  SETTINGS
+}
+
+model Role {
+  id   String @id @default(uuid())
+  name String @unique
+
+  users       User[]
+  permissions Permission[] @relation("RoleToPermission")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("roles")
+}
+
+model Permission {
+  id       String   @id @default(uuid())
+  actions  Action
+  resource Resource
+
+  roleId String
+  role   Role   @relation(fields: [roleId], references: [id], name: "RoleToPermission")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("permissions")
 }
 
 model User {
-  id       String     @id @default(uuid())
+  id       String @id @default(uuid())
   name     String
-  roles    UserRole[]
-  email    String     @unique
-  username String     @unique
+  email    String @unique
+  username String @unique
   password String
 
-  adminAt SchoolAdmins[]
+  roleId   String?
+  schoolId String?
+  role     Role?   @relation(fields: [roleId], references: [id])
+  school   School? @relation("UserSchool", fields: [schoolId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -38,24 +73,10 @@ model School {
   id   String @id @default(uuid())
   name String
 
-  admins SchoolAdmins[]
+  users User[] @relation("UserSchool")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("schools")
-}
-
-model SchoolAdmins {
-  id String @id @default(uuid())
-
-  userId   String
-  schoolId String
-  user     User   @relation(fields: [userId], references: [id])
-  school   School @relation(fields: [schoolId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("school_admins")
 }
