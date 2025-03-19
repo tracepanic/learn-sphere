@@ -1,5 +1,7 @@
 "use client";
 
+import { apiRequest } from "@/utils/api";
+import { constructUrl } from "@/utils/helper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@workspace/ui/components/button";
 import {
@@ -9,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@workspace/ui/components/card";
+import Loader from "@workspace/ui/components/custom/loader";
 import {
   Form,
   FormControl,
@@ -25,9 +28,27 @@ import {
   TabsTrigger,
 } from "@workspace/ui/components/tabs";
 import { MoveRight } from "lucide-react";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import * as z from "zod";
+
+type CheckInitResponse = {
+  value: boolean;
+};
+
+type CreateLMSRequest = {
+  name: string;
+  email: string;
+  username: string;
+  password: string;
+  school: string;
+};
+
+type CreateLMSResponse = {
+  success: boolean;
+};
 
 const adminSchema = z.object({
   name: z.string().min(5).max(255),
@@ -43,7 +64,29 @@ const schoolSchema = z.object({
 });
 
 export default function Page() {
+  const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("admin");
+
+  const router = useRouter();
+
+  useEffect(() => {
+    (async function checkInit() {
+      await apiRequest<null, CheckInitResponse>({
+        url: await constructUrl("/init"),
+        method: "GET",
+        silent: true,
+        onSuccess: (data) => {
+          if (data.value === false) {
+            toast.error("LMS already initialized");
+            router.push("/");
+          }
+        },
+        onError: () => null,
+      });
+
+      setLoading(false);
+    })();
+  }, []);
 
   const adminForm = useForm<z.infer<typeof adminSchema>>({
     resolver: zodResolver(adminSchema),
@@ -67,13 +110,32 @@ export default function Page() {
   };
 
   const onSchoolSubmit = async (values: z.infer<typeof schoolSchema>) => {
-    const data = {
-      admin: adminForm.getValues(),
-      school: values,
+    const data: CreateLMSRequest = {
+      name: adminForm.getValues("name"),
+      email: adminForm.getValues("email"),
+      username: adminForm.getValues("username"),
+      password: adminForm.getValues("password"),
+      school: values.name,
     };
 
-    console.log(data);
+    await apiRequest<CreateLMSRequest, CreateLMSResponse>({
+      url: await constructUrl("/init"),
+      method: "POST",
+      data,
+      loadingMessage: "Initializing LMS...",
+      successMessage: "LMS initialized successfully",
+      errorMessage: "System already initialized",
+      onSuccess: (data) => {
+        if (data.success) {
+          router.push("/");
+        }
+      },
+      onError: () => null,
+    });
   };
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <Card className="max-w-lg mx-auto mt-10">
@@ -165,7 +227,11 @@ export default function Page() {
                   )}
                 />
 
-                <Button type="submit" className="w-full mt-5">
+                <Button
+                  type="submit"
+                  disabled={schoolForm.formState.isSubmitting}
+                  className="w-full mt-5"
+                >
                   Continue to School Details <MoveRight />
                 </Button>
               </form>
@@ -192,7 +258,11 @@ export default function Page() {
                   )}
                 />
 
-                <Button type="submit" className="w-full mt-5">
+                <Button
+                  type="submit"
+                  disabled={schoolForm.formState.isSubmitting}
+                  className="w-full mt-5"
+                >
                   Initializa LMS
                 </Button>
               </form>

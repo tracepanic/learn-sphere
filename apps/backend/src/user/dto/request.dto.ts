@@ -1,4 +1,4 @@
-import { IsEmail, IsString, Length } from 'class-validator';
+import { IsEmail, IsString, Length, Matches } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -10,6 +10,7 @@ export class CreateUserDto {
   readonly email: string;
 
   @IsString()
+  @Matches(/^[a-z0-9_]{5,30}$/)
   @Length(5, 50)
   readonly username: string;
 
