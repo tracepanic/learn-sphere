@@ -1,4 +1,4 @@
-import { cn } from "@workspace/ui/lib/utils.js";
+import { cn } from "@workspace/ui/lib/utils";
 import { Loader2 } from "lucide-react";
 
 const Loader = ({ size = 30, className = "" }) => {
