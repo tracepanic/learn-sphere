@@ -29,7 +29,7 @@ export async function createSession(payload: Session) {
   const cookieStore = await cookies();
 
   cookieStore.set({
-    name: "name",
+    name: "session",
     value: session,
     httpOnly: true,
     secure: true,
