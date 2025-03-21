@@ -9,6 +9,7 @@ export async function constructUrl(url: string): Promise<string> {
 
   try {
     return new URL(url, backendUrl).toString();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     console.error("Error constructing URL:", error.message);
     throw new Error(`Invalid URL: ${url} or BACKEND_URL: ${backendUrl}`);

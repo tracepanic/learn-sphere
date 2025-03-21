@@ -1,6 +1,5 @@
 import { toast } from "sonner";
 
-// Types
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
 interface ApiOptions<TData, TResponse> {
@@ -33,10 +32,11 @@ export function apiRequest<TData, TResponse>({
   errorMessage = "An error occurred",
   onSuccess,
   onError,
-  silent = false, // Default to showing toasts
+  silent = false,
 }: ApiOptions<TData, TResponse>): Promise<ApiResponse<TResponse>> {
   // Create a promise that will be used for the actual API call
   const apiPromise = new Promise<ApiResponse<TResponse>>(
+    // eslint-disable-next-line no-async-promise-executor
     async (resolve, reject) => {
       try {
         const response = await fetch(url, {
@@ -49,12 +49,13 @@ export function apiRequest<TData, TResponse>({
         });
 
         // Try to parse the response as JSON
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let result: any;
         let errorMsg = "";
 
         try {
           result = await response.json();
-        } catch (e) {
+        } catch {
           // If response is not JSON, use status text
           result = null;
           errorMsg = response.statusText || "Failed to parse response";
@@ -123,7 +124,9 @@ export function apiRequest<TData, TResponse>({
       success: (data) => ({
         message: successMessage,
         description:
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           data.data && "message" in (data.data as any)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             ? (data.data as any).message
             : successMessage,
       }),
