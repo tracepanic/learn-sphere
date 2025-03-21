@@ -126,8 +126,8 @@ export function apiRequest<TData, TResponse>({
         description:
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           data.data && "message" in (data.data as any)
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            ? (data.data as any).message
+            ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (data.data as any).message
             : successMessage,
       }),
       error: (err) => ({
