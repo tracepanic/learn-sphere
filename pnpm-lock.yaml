@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@ianvs/prettier-plugin-sort-imports':
+        specifier: ^4.4.1
+        version: 4.4.1(prettier@3.5.3)
       '@workspace/eslint':
         specifier: workspace:*
         version: link:config/eslint
@@ -17,6 +20,9 @@ importers:
       '@workspace/typescript':
         specifier: workspace:*
         version: link:config/typescript
+      prettier:
+        specifier: ^3.5.3
+        version: 3.5.3
       turbo:
         specifier: ^2.4.2
         version: 2.4.4
@@ -132,9 +138,6 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.10)(ts-node@10.9.2(@swc/core@1.11.11(@swc/helpers@0.5.15))(@types/node@22.13.10)(typescript@5.7.3))
-      prettier:
-        specifier: ^3.4.2
-        version: 3.5.3
       prisma:
         specifier: 6.4.1
         version: 6.4.1(typescript@5.7.3)
@@ -269,6 +272,9 @@ importers:
       postcss:
         specifier: ^8.5.3
         version: 8.5.3
+      prettier-plugin-tailwindcss:
+        specifier: ^0.6.11
+        version: 0.6.11(@ianvs/prettier-plugin-sort-imports@4.4.1(prettier@3.5.3))(prettier@3.5.3)
       tailwindcss:
         specifier: ^4.0.8
         version: 4.0.14
@@ -308,12 +314,6 @@ importers:
 
   config/prettier:
     devDependencies:
-      '@ianvs/prettier-plugin-sort-imports':
-        specifier: ^4.4.1
-        version: 4.4.1(prettier@3.5.3)
-      prettier:
-        specifier: ^3.5.2
-        version: 3.5.3
       prettier-plugin-tailwindcss:
         specifier: ^0.6.11
         version: 0.6.11(@ianvs/prettier-plugin-sort-imports@4.4.1(prettier@3.5.3))(prettier@3.5.3)
@@ -416,6 +416,9 @@ importers:
       postcss:
         specifier: ^8.5.3
         version: 8.5.3
+      prettier-plugin-tailwindcss:
+        specifier: ^0.6.11
+        version: 0.6.11(@ianvs/prettier-plugin-sort-imports@4.4.1(prettier@3.5.3))(prettier@3.5.3)
       tailwindcss:
         specifier: ^4.0.8
         version: 4.0.14

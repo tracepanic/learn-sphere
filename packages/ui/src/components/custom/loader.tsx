@@ -3,7 +3,12 @@ import { Loader2 } from "lucide-react";
 
 const Loader = ({ size = 30, className = "" }) => {
   return (
-    <div className={cn("flex justify-center mt-10 items-center h-full w-full", className)}>
+    <div
+      className={cn(
+        "mt-10 flex h-full w-full items-center justify-center",
+        className,
+      )}
+    >
       <Loader2 className="animate-spin text-gray-500" size={size} />
     </div>
   );
