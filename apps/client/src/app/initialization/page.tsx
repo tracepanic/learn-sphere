@@ -127,12 +127,13 @@ export default function Page() {
       errorMessage: "System already initialized",
       onSuccess: (data) => {
         if (data.success) {
-          router.push("/");
+          router.push("/auth/login");
         }
       },
       onError: () => null,
     });
   };
+
   if (loading) {
     return <Loader />;
   }
@@ -263,7 +264,7 @@ export default function Page() {
                   disabled={schoolForm.formState.isSubmitting}
                   className="w-full mt-5"
                 >
-                  Initializa LMS
+                  Initialize LMS
                 </Button>
               </form>
             </Form>

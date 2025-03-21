@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
 import * as argon2 from 'argon2';
+import { LoginResDto } from 'src/auth/dto/response.dto';
 import { JwtPayload } from 'src/auth/types';
 import { UserService } from 'src/user/user.service';
 
@@ -12,9 +13,14 @@ export class AuthService {
     private readonly userService: UserService,
   ) {}
 
-  async login(user: User | null) {
+  async login(user: User | null): Promise<LoginResDto> {
     if (!user) throw new BadRequestException('Invalid credentials');
-    return { access_token: await this.jwtSignAuth(user.id) };
+    return {
+      id: user.id,
+      name: user.name,
+      type: user.type,
+      accessToken: await this.jwtSignAuth(user.id),
+    };
   }
 
   async validateUser(username: string, password: string): Promise<User | null> {

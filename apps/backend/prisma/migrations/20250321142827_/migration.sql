@@ -2,7 +2,10 @@
 CREATE TYPE "Action" AS ENUM ('READ', 'CREATE', 'UPDATE', 'DELETE');
 
 -- CreateEnum
-CREATE TYPE "Resource" AS ENUM ('SETTINGS');
+CREATE TYPE "Resource" AS ENUM ('ADMIN_SETTINGS');
+
+-- CreateEnum
+CREATE TYPE "UserType" AS ENUM ('ADMIN', 'TEACHER', 'STUDENT');
 
 -- CreateTable
 CREATE TABLE "roles" (
@@ -30,6 +33,7 @@ CREATE TABLE "permissions" (
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "type" "UserType" NOT NULL,
     "email" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
