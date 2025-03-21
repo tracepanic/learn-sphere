@@ -2,7 +2,7 @@
 
 import { apiRequest } from "@/utils/api";
 import { constructUrl } from "@/utils/helper";
-import { createSession } from "@/utils/session";
+import { createSession, Session } from "@/utils/session";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@workspace/ui/components/button";
 import {
@@ -49,7 +49,7 @@ export default function Page() {
       successMessage: "Loggin successful",
       errorMessage: "Something went wrong",
       onSuccess: (data) => {
-        createSession(data);
+        createSession(data as Session);
       },
       onError: () => null,
     });
