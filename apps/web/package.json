@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@workspace/ui": "workspace:*",
-    "lucide-react": "0.482.0",
+    "lucide-react": "0.483.0",
     "next": "^15.1.7",
     "nextra": "^4.2.16",
     "nextra-theme-docs": "^4.2.16",
