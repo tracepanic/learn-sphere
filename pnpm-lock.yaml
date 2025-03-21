@@ -11,6 +11,9 @@ importers:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.4.1
         version: 4.4.1(prettier@3.5.3)
+      '@workspace/backend':
+        specifier: workspace:*
+        version: link:apps/backend
       '@workspace/eslint':
         specifier: workspace:*
         version: link:config/eslint
@@ -171,9 +174,15 @@ importers:
       '@t3-oss/env-nextjs':
         specifier: ^0.12.0
         version: 0.12.0(typescript@5.8.2)(zod@3.24.2)
+      '@workspace/backend':
+        specifier: workspace:*
+        version: link:../backend
       '@workspace/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      jose:
+        specifier: ^6.0.10
+        version: 6.0.10
       lucide-react:
         specifier: 0.483.0
         version: 0.483.0(react@19.0.0)
@@ -4628,6 +4637,9 @@ packages:
   jiti@2.4.2:
     resolution: {integrity: sha512-rg9zJN+G4n2nfJl5MW3BMygZX56zKPNVEYYqq7adpmMh4Jn2QNEwhvQlFy6jPVdcod7txZtKHWnyZiA3a0zP7A==}
     hasBin: true
+
+  jose@6.0.10:
+    resolution: {integrity: sha512-skIAxZqcMkOrSwjJvplIPYrlXGpxTPnro2/QWTDCxAdWQrSTV5/KqspMWmi5WAx5+ULswASJiZ0a+1B/Lxt9cw==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -11717,6 +11729,8 @@ snapshots:
       - ts-node
 
   jiti@2.4.2: {}
+
+  jose@6.0.10: {}
 
   js-tokens@4.0.0: {}
 

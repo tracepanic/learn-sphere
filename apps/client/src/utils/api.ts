@@ -122,7 +122,7 @@ export function apiRequest<TData, TResponse>({
     toast.promise(apiPromise, {
       loading: loadingMessage,
       success: (data) => ({
-        message: successMessage,
+        message: "Success!",
         description:
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           data.data && "message" in (data.data as any)

@@ -1,5 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { Action, Resource } from '@prisma/client';
+import { Action, Resource, UserType } from '@prisma/client';
 import { AuthService } from 'src/auth/auth.service';
 import { InitRequestDto } from 'src/init/dto/request.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -49,12 +49,12 @@ export class InitService {
           data: [
             {
               actions: Action.READ,
-              resource: Resource.SETTINGS,
+              resource: Resource.ADMIN_SETTINGS,
               roleId: superAdminRole.id,
             },
             {
               actions: Action.UPDATE,
-              resource: Resource.SETTINGS,
+              resource: Resource.ADMIN_SETTINGS,
               roleId: superAdminRole.id,
             },
           ],
@@ -68,6 +68,7 @@ export class InitService {
           data: {
             name: dto.name,
             email: dto.email,
+            type: UserType.ADMIN,
             username: dto.username,
             password: await this.authService.hashPassword(dto.password),
             roleId: superAdminRole.id,
