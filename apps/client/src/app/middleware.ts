@@ -21,28 +21,19 @@ export async function middleware(req: NextRequest) {
 
   if (pathname.startsWith("/admin") && userRole !== "ADMIN") {
     return NextResponse.redirect(
-      new URL(
-        `/unauthorized?redirect=${encodeURIComponent(pathname)}`,
-        req.url,
-      ),
+      new URL(`/unauthorized?origin=${encodeURIComponent(pathname)}`, req.url),
     );
   }
 
   if (pathname.startsWith("/teacher") && userRole !== "TEACHER") {
     return NextResponse.redirect(
-      new URL(
-        `/unauthorized?redirect=${encodeURIComponent(pathname)}`,
-        req.url,
-      ),
+      new URL(`/unauthorized?origin=${encodeURIComponent(pathname)}`, req.url),
     );
   }
 
   if (pathname.startsWith("/student") && userRole !== "STUDENT") {
     return NextResponse.redirect(
-      new URL(
-        `/unauthorized?redirect=${encodeURIComponent(pathname)}`,
-        req.url,
-      ),
+      new URL(`/unauthorized?origin=${encodeURIComponent(pathname)}`, req.url),
     );
   }
 
