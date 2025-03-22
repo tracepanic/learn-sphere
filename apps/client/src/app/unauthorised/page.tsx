@@ -35,7 +35,7 @@ export default function Page() {
         <h1 className="text-2xl font-bold text-red-600">Access Restricted</h1>
         <div className="space-y-2 text-slate-700">
           <p className="text-lg">
-            You don't have permission to access {getAttemptedRole()} area.
+            You don&apos;t have permission to access {getAttemptedRole()} area.
           </p>
         </div>
       </CardContent>
