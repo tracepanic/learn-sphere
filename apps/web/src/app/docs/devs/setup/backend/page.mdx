@@ -1,0 +1,17 @@
+# Backend Setup
+
+This section will guide you through configuring the backend service for development.
+
+## Required Environment Variables
+
+- `DATABASE_URL{:bash}`: Connection string for your PostgreSQL database
+- `JWT_SECRET{:bash}`: A secret key used for signing [JSON Web Tokens](https://jwt.io/) (JWT).
+- `JWT_EXPIRES_IN{:bash}`: This defines the expiration time for the JWT.
+
+## Run Migrations
+
+You then need to run migrations to set up your database schema.
+
+```bash
+pnpm prisma migrate dev
+```
