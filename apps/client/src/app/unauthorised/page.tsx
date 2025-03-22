@@ -7,11 +7,21 @@ import {
   CardFooter,
   CardHeader,
 } from "@workspace/ui/components/card";
+import Loader from "@workspace/ui/components/custom/loader";
 import { ShieldAlert } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 export default function Page() {
+  return (
+    <Suspense fallback={<Loader />}>
+      <Unauthorised />
+    </Suspense>
+  );
+}
+
+function Unauthorised() {
   const searchParams = useSearchParams();
   const origin = searchParams.get("origin") || "/";
 
