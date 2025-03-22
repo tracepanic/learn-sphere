@@ -16,6 +16,7 @@ function Calendar({
 }: CalendarProps) {
   return (
     <DayPicker
+      animate
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
       classNames={{
@@ -30,14 +31,14 @@ function Calendar({
           buttonVariants({
             variant: "outline",
             className:
-              "absolute right-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+              "absolute right-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 aria-disabled:opacity-30 aria-disabled:pointer-events-none",
           }),
         ),
         button_previous: cn(
           buttonVariants({
             variant: "outline",
             className:
-              "absolute left-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100",
+              "absolute left-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 aria-disabled:opacity-30 aria-disabled:pointer-events-none",
           }),
         ),
         nav: "flex items-start",
