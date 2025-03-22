@@ -3,7 +3,6 @@
 import { env } from "@/env/server";
 import { jwtVerify, SignJWT } from "jose";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export type UserSession = {
   id: string;
@@ -51,10 +50,11 @@ export async function getSession(): Promise<Session | null> {
     return payload as Session;
   } catch (error) {
     console.error("Failed to verify the session: ", error);
-    redirect("/auth/login");
+    await deleteSession();
+    return null;
   }
 }
 
-export async function deleteCookie() {
+export async function deleteSession() {
   (await cookies()).delete("session");
 }
