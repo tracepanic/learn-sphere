@@ -139,7 +139,7 @@ export default function Page() {
   }
 
   return (
-    <Card className="max-w-lg mx-auto mt-10">
+    <Card className="max-w-lg mx-auto px-4 mt-10">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold">
           Initialize Your LMS

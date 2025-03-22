@@ -2,7 +2,7 @@
 
 import { apiRequest } from "@/utils/api";
 import { constructUrl } from "@/utils/helper";
-import { createSession, Session } from "@/utils/session";
+import { createSession } from "@/utils/session";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@workspace/ui/components/button";
 import {
@@ -24,6 +24,18 @@ import { Input } from "@workspace/ui/components/input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+type LoginRequest = {
+  username: string;
+  password: string;
+};
+
+type LoginResponse = {
+  id: string;
+  name: string;
+  type: "ADMIN" | "TEACHER" | "STUDENT";
+  accessToken: string;
+};
+
 const schema = z.object({
   username: z
     .string()
@@ -41,7 +53,7 @@ export default function Page() {
   });
 
   const onSubmit = async (values: z.infer<typeof schema>) => {
-    await apiRequest({
+    await apiRequest<LoginRequest, LoginResponse>({
       url: await constructUrl("auth/login"),
       method: "POST",
       data: values,
@@ -49,14 +61,18 @@ export default function Page() {
       successMessage: "Loggin successful",
       errorMessage: "Something went wrong",
       onSuccess: (data) => {
-        createSession(data as Session);
+        createSession({
+          accessToken: data.accessToken,
+          user: { id: data.id, name: data.name, type: data.type },
+        });
+        // Redirect to relevant dashboard accoding to data.type
       },
       onError: () => null,
     });
   };
 
   return (
-    <Card className="max-w-lg mx-auto mt-10">
+    <Card className="max-w-lg mx-auto px-4 mt-10">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold">Login</CardTitle>
         <CardDescription>

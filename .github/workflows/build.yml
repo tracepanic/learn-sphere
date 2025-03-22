@@ -45,4 +45,9 @@ jobs:
         run: pnpm --filter=backend build
 
       - name: Build lms web client app
+        env:
+          BACKEND_URL: "http://localhost:8000"
+          SITE_URL: "http://localhost:3001"
+          SITE_DESCRIPTION: "Learn programming the right way"
+          SITE_NAME: "Learn Sphere Academy"
         run: pnpm --filter=client build

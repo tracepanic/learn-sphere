@@ -51,10 +51,11 @@ export async function getSession(): Promise<Session | null> {
     return payload as Session;
   } catch (error) {
     console.error("Failed to verify the session: ", error);
-    redirect("/auth/login");
+    await deleteSession();
+    return null;
   }
 }
 
-export async function deleteCookie() {
+export async function deleteSession() {
   (await cookies()).delete("session");
 }
