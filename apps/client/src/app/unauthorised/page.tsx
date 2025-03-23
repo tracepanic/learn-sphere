@@ -7,7 +7,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@workspace/ui/components/card";
-import Loader from "@workspace/ui/components/custom/loader";
+import { Loader } from "@workspace/ui/components/custom/loader";
 import { ShieldAlert } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
