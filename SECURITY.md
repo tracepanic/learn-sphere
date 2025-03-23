@@ -10,4 +10,4 @@ We encourage users to upgrade to the latest supported versions to ensure they re
 We take security seriously and encourage users to report any vulnerabilities they discover.
 Please follow the guidelines below to report a vulnerability:
 
-- Submit a report on our github issues page.
+- Submit a report on our github issues page with a security label.
