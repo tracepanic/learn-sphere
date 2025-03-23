@@ -10,8 +10,7 @@
     "dev": "turbo dev",
     "format": "turbo format",
     "lint": "eslint . && turbo lint",
-    "update": "turbo update",
-    "prepare": "husky"
+    "update": "turbo update"
   },
   "lint-staged": {
     "*.{js,ts,tsx,json,css,md}": "prettier --write"

@@ -17,7 +17,7 @@ import {
 import { ChevronRight, LucideIcon } from "lucide-react";
 import Link from "next/link";
 
-type SidebarMenuProps = {
+export type SidebarMenuProps = {
   items: {
     title: string;
     url: string;
@@ -33,7 +33,7 @@ type SidebarMenuProps = {
 function SidebarMain({ items }: SidebarMenuProps) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>Actions</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>

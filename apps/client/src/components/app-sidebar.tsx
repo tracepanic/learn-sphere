@@ -1,41 +1,53 @@
 import { SidebarMain } from "@/components/sidebar-main";
+import { SidebarUser } from "@/components/sidebar-user";
 import { env } from "@/env/server";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@workspace/ui/components/sidebar";
-import { Command, Settings2 } from "lucide-react";
+import { Command, LucideIcon } from "lucide-react";
 import Link from "next/link";
 
-interface AppSidebarProps {}
+interface AppSidebarProps {
+  type: "ADMIN";
+  items: {
+    title: string;
+    url: string;
+    icon: LucideIcon;
+    isActive?: boolean;
+    items?: {
+      title: string;
+      url: string;
+    }[];
+  }[];
+}
 
-const navMain = [
-  {
-    title: "Settings",
-    url: "/admin/settings",
-    icon: Settings2,
-    isActive: true,
-    items: [
-      {
-        title: "General",
-        url: "/admin/settings/general",
-      },
-    ],
-  },
-];
+const user = {
+  name: "Trace Panic",
+  email: "m@example.com",
+  avatar: "https://github.com/tracepanic.jpg",
+};
 
-function AppSidebar({}: AppSidebarProps) {
+function AppSidebar({ items, type }: AppSidebarProps) {
+  let root = "";
+
+  switch (type) {
+    case "ADMIN":
+      root = "/admin";
+  }
+
   return (
     <Sidebar variant="inset">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="#">
+              <Link href={root}>
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                   {/* Replace with logo later on */}
                   <Command className="size-4" />
@@ -44,7 +56,9 @@ function AppSidebar({}: AppSidebarProps) {
                   <span className="truncate font-semibold">
                     {env.SITE_NAME}
                   </span>
-                  <span className="truncate text-xs">Admin Dashboard</span>
+                  <span className="truncate text-xs">
+                    {type === "ADMIN" && "Admin Dashboard"}
+                  </span>
                 </div>
               </Link>
             </SidebarMenuButton>
@@ -52,8 +66,11 @@ function AppSidebar({}: AppSidebarProps) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarMain items={navMain} />
+        <SidebarMain items={items} />
       </SidebarContent>
+      <SidebarFooter>
+        <SidebarUser user={user} />
+      </SidebarFooter>
     </Sidebar>
   );
 }
