@@ -21,6 +21,7 @@ import {
   FormMessage,
 } from "@workspace/ui/components/form";
 import { Input } from "@workspace/ui/components/input";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -44,6 +45,8 @@ const schema = z.object({
 });
 
 export default function Page() {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -57,15 +60,20 @@ export default function Page() {
       url: await constructUrl("auth/login"),
       method: "POST",
       data: values,
-      loadingMessage: "Loggin in...",
-      successMessage: "Loggin successful",
+      loadingMessage: "Logging in...",
+      successMessage: "Login successful",
       errorMessage: "Something went wrong",
       onSuccess: (data) => {
         createSession({
           accessToken: data.accessToken,
           user: { id: data.id, name: data.name, type: data.type },
         });
-        // Redirect to relevant dashboard accoding to data.type
+
+        switch (data.type) {
+          case "ADMIN":
+            router.push("/admin");
+            break;
+        }
       },
       onError: () => null,
     });

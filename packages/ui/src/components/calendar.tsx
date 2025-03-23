@@ -31,14 +31,14 @@ function Calendar({
           buttonVariants({
             variant: "outline",
             className:
-              "absolute right-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 aria-disabled:opacity-30 aria-disabled:pointer-events-none",
+              "absolute right-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 aria-disabled:pointer-events-none aria-disabled:opacity-30",
           }),
         ),
         button_previous: cn(
           buttonVariants({
             variant: "outline",
             className:
-              "absolute left-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 aria-disabled:opacity-30 aria-disabled:pointer-events-none",
+              "absolute left-0 h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 aria-disabled:pointer-events-none aria-disabled:opacity-30",
           }),
         ),
         nav: "flex items-start",

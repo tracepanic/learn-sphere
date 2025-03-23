@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@workspace/ui/components/card";
-import Loader from "@workspace/ui/components/custom/loader";
+import { Loader } from "@workspace/ui/components/custom/loader";
 import {
   Form,
   FormControl,
