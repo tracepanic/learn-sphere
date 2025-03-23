@@ -7,14 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Action {
+enum PermissionAction {
   READ
   CREATE
   UPDATE
   DELETE
 }
 
-enum Resource {
+enum PermissionResource {
   ADMIN_SETTINGS
 }
 
@@ -38,9 +38,9 @@ model Role {
 }
 
 model Permission {
-  id       String   @id @default(uuid())
-  actions  Action
-  resource Resource
+  id       String             @id @default(uuid())
+  actions  PermissionAction[]
+  resource PermissionResource
 
   roleId String
   role   Role   @relation(fields: [roleId], references: [id], name: "RoleToPermission")

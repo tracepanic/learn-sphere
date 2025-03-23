@@ -1,8 +1,8 @@
 -- CreateEnum
-CREATE TYPE "Action" AS ENUM ('READ', 'CREATE', 'UPDATE', 'DELETE');
+CREATE TYPE "PermissionAction" AS ENUM ('READ', 'CREATE', 'UPDATE', 'DELETE');
 
 -- CreateEnum
-CREATE TYPE "Resource" AS ENUM ('ADMIN_SETTINGS');
+CREATE TYPE "PermissionResource" AS ENUM ('ADMIN_SETTINGS');
 
 -- CreateEnum
 CREATE TYPE "UserType" AS ENUM ('ADMIN', 'TEACHER', 'STUDENT');
@@ -20,8 +20,8 @@ CREATE TABLE "roles" (
 -- CreateTable
 CREATE TABLE "permissions" (
     "id" TEXT NOT NULL,
-    "actions" "Action" NOT NULL,
-    "resource" "Resource" NOT NULL,
+    "actions" "PermissionAction"[],
+    "resource" "PermissionResource" NOT NULL,
     "roleId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

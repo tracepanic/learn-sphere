@@ -1,5 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { Action, Resource, UserType } from '@prisma/client';
+import { PermissionAction, PermissionResource, UserType } from '@prisma/client';
 import { AuthService } from 'src/auth/auth.service';
 import { InitRequestDto } from 'src/init/dto/request.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -45,19 +45,12 @@ export class InitService {
         });
 
         // SuperAdmin permissions
-        await tx.permission.createMany({
-          data: [
-            {
-              actions: Action.READ,
-              resource: Resource.ADMIN_SETTINGS,
-              roleId: superAdminRole.id,
-            },
-            {
-              actions: Action.UPDATE,
-              resource: Resource.ADMIN_SETTINGS,
-              roleId: superAdminRole.id,
-            },
-          ],
+        await tx.permission.create({
+          data: {
+            roleId: superAdminRole.id,
+            resource: PermissionResource.ADMIN_SETTINGS,
+            actions: [PermissionAction.READ, PermissionAction.UPDATE],
+          },
         });
 
         const school = await tx.school.create({
