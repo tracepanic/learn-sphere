@@ -15,6 +15,11 @@ import Link from "next/link";
 
 interface AppSidebarProps {
   type: "ADMIN";
+  user: {
+    name: string;
+    email: string;
+    avatar: string;
+  };
   items: {
     title: string;
     url: string;
@@ -27,13 +32,7 @@ interface AppSidebarProps {
   }[];
 }
 
-const user = {
-  name: "Trace Panic",
-  email: "m@example.com",
-  avatar: "https://github.com/tracepanic.jpg",
-};
-
-function AppSidebar({ items, type }: AppSidebarProps) {
+function AppSidebar({ items, type, user }: AppSidebarProps) {
   let root = "";
 
   switch (type) {
