@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar";
+import { getSession } from "@/utils/session";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,6 +15,7 @@ import {
   SidebarTrigger,
 } from "@workspace/ui/components/sidebar";
 import { Settings2 } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 
 const items = [
   {
@@ -30,13 +32,25 @@ const items = [
   },
 ];
 
-const user = {
-  name: "Trace Panic",
-  email: "m@example.com",
-  avatar: "",
-};
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const session = await getSession();
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+  if (!session || session.user.type === "ADMIN") {
+    router.push(`/unauthorized?origin=${encodeURIComponent(pathname)}`);
+  }
+
+  const user = {
+    name: session?.user.name ?? "",
+    email: "m@example.com",
+    avatar: "",
+  };
+
   return (
     <SidebarProvider>
       <AppSidebar items={items} type="ADMIN" user={user} />
