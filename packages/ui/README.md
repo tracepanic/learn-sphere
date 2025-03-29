@@ -1,11 +1,10 @@
-# @workspace/ui
+# `@workspace/ui`
 
-Shared **ui** configuration for the workspace. Mostly used by [Shadcn UI](https://ui.shadcn.com/docs) configuration.
+Shared **ui** configuration for the workspace
+Built by Shadcn UI. Referer to its documentation [here](https://ui.shadcn.com/docs)
 
 ## Installing a component
 
-Install the package you desire from [Shadcn UI](https://ui.shadcn.com/docs):
-
 ```bash
-npx shadcn@latest add component
+pnpm dlx shadcn@latest add component
 ```

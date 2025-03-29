@@ -1,3 +1,3 @@
 # `@workspace/prettier`
 
-Shared **prettier** configuration for the workspace.
+Shared **prettier** configuration for the workspace
