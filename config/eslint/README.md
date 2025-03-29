@@ -1,3 +1,3 @@
 # `@workspace/eslint`
 
-Shared **eslint** configuration for the workspace.
+Shared **eslint** configuration for the workspace
