@@ -10,14 +10,6 @@ export class UserService {
     return this.prisma.user.count();
   }
 
-  private async getById(id: string): Promise<User | null> {
-    return this.prisma.user.findUnique({ where: { id } });
-  }
-
-  private async getByEmail(email: string): Promise<User | null> {
-    return this.prisma.user.findUnique({ where: { email } });
-  }
-
   async getByUsername(username: string): Promise<User | null> {
     return this.prisma.user.findUnique({ where: { username } });
   }

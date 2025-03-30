@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { AdminSettingsModule } from 'src/admin-settings/admin-settings.module';
 import { AppController } from 'src/app.controller';
 import { AppService } from 'src/app.service';
 import { AuthModule } from 'src/auth/auth.module';
@@ -15,6 +16,7 @@ import { UserModule } from 'src/user/user.module';
     InitModule,
     SchoolModule,
     PrismaModule,
+    AdminSettingsModule,
     ConfigModule.forRoot({ isGlobal: true }),
   ],
   controllers: [AppController],
