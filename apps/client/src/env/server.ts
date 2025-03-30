@@ -8,6 +8,7 @@ export const env = createEnv({
     SITE_URL: z.string().url(),
     SITE_NAME: z.string(),
     SESSION_SECRET_KEY: z.string(),
+    SHARED_JWT_SECRET: z.string(),
   },
   experimental__runtimeEnv: process.env,
 });

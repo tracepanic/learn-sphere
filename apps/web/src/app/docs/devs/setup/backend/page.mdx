@@ -8,7 +8,7 @@ development.
 - `DATABASE_URL{:bash}`: Connection string for your PostgreSQL database
 - `JWT_SECRET{:bash}`: A secret key used for signing
   [JSON Web Tokens](https://jwt.io/) (JWT).
-- `JWT_EXPIRES_IN{:bash}`: This defines the expiration time for the JWT.
+- `SHARED_JWT_SECTRET{:bash}`: This is a secret that should be set on both the web client and backend. Its used for encrypted communication between the two.
 
 ## Run Migrations
 
