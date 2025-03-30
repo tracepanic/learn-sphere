@@ -49,4 +49,5 @@ jobs:
           SITE_DESCRIPTION: "Learn programming the right way"
           SITE_NAME: "Learn Sphere Academy"
           SESSION_SECRET_KEY: "random"
+          SHARED_JWT_SECRET: "shared"
         run: pnpm --filter=client build

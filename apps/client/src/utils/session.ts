@@ -15,9 +15,36 @@ export type Session = {
   accessToken: string;
 };
 
-const encodedKey = new TextEncoder().encode(env.SESSION_SECRET_KEY);
+export type CreateSession = {
+  name: string;
+  accessInfo: string;
+  accessToken: string;
+};
 
-export async function createSession(payload: Session) {
+type DecodeAccessInfoRes = {
+  userId: string;
+  type: "ADMIN" | "TEACHER" | "STUDENT";
+};
+
+const encodedKey = new TextEncoder().encode(env.SESSION_SECRET_KEY);
+const sharedKey = new TextEncoder().encode(env.SHARED_JWT_SECRET);
+
+export async function createSession(data: CreateSession) {
+  const res = await decodeAcessInfo(data.accessInfo);
+  if (!res) {
+    console.error("Failed to decode access info");
+    return;
+  }
+
+  const payload: Session = {
+    accessToken: data.accessToken,
+    user: {
+      id: res.userId,
+      name: data.name,
+      type: res.type,
+    },
+  };
+
   const session = await new SignJWT(payload)
     .setIssuedAt()
     .setExpirationTime("7d")
@@ -48,8 +75,8 @@ export async function getSession(): Promise<Session | null> {
       algorithms: ["HS256"],
     });
     return payload as Session;
-  } catch (error) {
-    console.error("Failed to verify the session: ", error);
+  } catch {
+    console.error("Failed to verify the session");
     await deleteSession();
     return null;
   }
@@ -57,4 +84,19 @@ export async function getSession(): Promise<Session | null> {
 
 export async function deleteSession() {
   (await cookies()).delete("session");
+}
+
+export async function decodeAcessInfo(
+  accessInfo: string,
+): Promise<DecodeAccessInfoRes | null> {
+  try {
+    const { payload } = await jwtVerify(accessInfo, sharedKey, {
+      algorithms: ["HS256"],
+    });
+    return payload as DecodeAccessInfoRes;
+  } catch {
+    console.error("Failed to decode access info");
+    await deleteSession();
+    return null;
+  }
 }

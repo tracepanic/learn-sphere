@@ -1,7 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { PermissionAction, PermissionResource, User } from '@prisma/client';
 import * as argon2 from 'argon2';
+import { SignJWT } from 'jose';
 import { LoginResDto } from 'src/auth/dto/response.dto';
 import { JwtPayload } from 'src/auth/types';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -13,14 +15,14 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
     private readonly userService: UserService,
+    private readonly configService: ConfigService,
   ) {}
 
   async login(user: User | null): Promise<LoginResDto> {
     if (!user) throw new BadRequestException('Invalid credentials');
     return {
-      id: user.id,
       name: user.name,
-      type: user.type,
+      accessInfo: await this.encodeAccessInfo(user.id, user.type),
       accessToken: await this.jwtSignAuth(user.id),
     };
   }
@@ -45,6 +47,21 @@ export class AuthService {
     const payload: JwtPayload = { sub: userId };
 
     return this.jwtService.signAsync(payload);
+  }
+
+  async encodeAccessInfo(userId: string, type: string): Promise<string> {
+    const payload = { userId, type };
+    const key = new TextEncoder().encode(
+      this.configService.get<string>('SHARED_JWT_SECRET'),
+    );
+
+    const accessInfo = await new SignJWT(payload)
+      .setIssuedAt()
+      .setExpirationTime('1h')
+      .setProtectedHeader({ alg: 'HS256' })
+      .sign(key);
+
+    return accessInfo;
   }
 
   async getUserPermissions(userId: string): Promise<

@@ -2,7 +2,7 @@
 
 import { apiRequest } from "@/utils/api";
 import { constructUrl } from "@/utils/helper";
-import { createSession } from "@/utils/session";
+import { createSession, getSession } from "@/utils/session";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@workspace/ui/components/button";
 import {
@@ -31,10 +31,9 @@ type LoginRequest = {
 };
 
 type LoginResponse = {
-  id: string;
-  name: string;
-  type: "ADMIN" | "TEACHER" | "STUDENT";
-  accessToken: string;
+  readonly name: string;
+  readonly accessInfo: string;
+  readonly accessToken: string;
 };
 
 const schema = z.object({
@@ -63,13 +62,16 @@ export default function Page() {
       loadingMessage: "Logging in...",
       successMessage: "Login successful",
       errorMessage: "Something went wrong",
-      onSuccess: (data) => {
-        createSession({
+      onSuccess: async (data) => {
+        await createSession({
+          name: data.name,
+          accessInfo: data.accessInfo,
           accessToken: data.accessToken,
-          user: { id: data.id, name: data.name, type: data.type },
         });
 
-        switch (data.type) {
+        const session = await getSession();
+
+        switch (session?.user.type) {
           case "ADMIN":
             router.push("/admin");
             break;
