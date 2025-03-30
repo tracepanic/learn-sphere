@@ -35,6 +35,7 @@ const schema = z.object({
 
 export default function Page() {
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [data, setData] = useState<GetGeneralSettingsRes | null>(null);
 
   const form = useForm<z.infer<typeof schema>>({
@@ -55,6 +56,7 @@ export default function Page() {
           form.reset({ name: data.name });
         },
         onError: (error) => {
+          setError(error);
           toast.error(error);
         },
       });
@@ -62,6 +64,10 @@ export default function Page() {
       setLoading(false);
     })();
   }, []);
+
+  if (error) {
+    return null;
+  }
 
   if (loading) {
     return <Loader />;
