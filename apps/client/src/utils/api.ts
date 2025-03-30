@@ -1,4 +1,5 @@
 import { toast } from "sonner";
+import { getSession } from "@/utils/session";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
@@ -12,7 +13,7 @@ interface ApiOptions<TData, TResponse> {
   errorMessage?: string;
   onSuccess?: (data: TResponse) => void;
   onError?: (error: string) => void;
-  silent?: boolean; // Add silent option to skip toast notifications
+  silent?: boolean; // Silent skips toast notifications
 }
 
 interface ApiResponse<T> {
@@ -22,7 +23,7 @@ interface ApiResponse<T> {
 }
 
 // Main API function
-export function apiRequest<TData, TResponse>({
+export async function apiRequest<TData, TResponse>({
   url,
   method = "GET",
   data,
@@ -34,6 +35,16 @@ export function apiRequest<TData, TResponse>({
   onError,
   silent = false,
 }: ApiOptions<TData, TResponse>): Promise<ApiResponse<TResponse>> {
+  const session = await getSession();
+  const requestHeaders: HeadersInit = {
+    "Content-Type": "application/json",
+    ...headers,
+  };
+
+  if (session?.accessToken) {
+    requestHeaders.Authorization = `Bearer ${session.accessToken}`;
+  }
+
   // Create a promise that will be used for the actual API call
   const apiPromise = new Promise<ApiResponse<TResponse>>(
     // eslint-disable-next-line no-async-promise-executor
@@ -41,10 +52,7 @@ export function apiRequest<TData, TResponse>({
       try {
         const response = await fetch(url, {
           method,
-          headers: {
-            "Content-Type": "application/json",
-            ...headers,
-          },
+          headers: requestHeaders,
           body: data ? JSON.stringify(data) : undefined,
         });
 
