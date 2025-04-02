@@ -32,7 +32,7 @@ export default async function Layout({
 
   const user = {
     name: session.user.name ?? "",
-    email: "m@example.com",
+    username: session.user.username ?? "",
     avatar: "",
   };
 

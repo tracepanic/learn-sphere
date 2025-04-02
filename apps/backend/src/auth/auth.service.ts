@@ -22,6 +22,7 @@ export class AuthService {
     if (!user) throw new BadRequestException('Invalid credentials');
     return {
       name: user.name,
+      username: user.username,
       accessInfo: await this.encodeAccessInfo(user.id, user.type),
       accessToken: await this.jwtSignAuth(user.id),
     };

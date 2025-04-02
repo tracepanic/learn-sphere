@@ -31,9 +31,10 @@ type LoginRequest = {
 };
 
 type LoginResponse = {
-  readonly name: string;
-  readonly accessInfo: string;
-  readonly accessToken: string;
+  name: string;
+  username: string;
+  accessInfo: string;
+  accessToken: string;
 };
 
 const schema = z.object({
@@ -65,6 +66,7 @@ export default function Page() {
       onSuccess: async (data) => {
         await createSession({
           name: data.name,
+          username: data.username,
           accessInfo: data.accessInfo,
           accessToken: data.accessToken,
         });

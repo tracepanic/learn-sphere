@@ -25,7 +25,7 @@ import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from "lucide-react";
 type SidebarUserProps = {
   user: {
     name: string;
-    email: string;
+    username: string;
     avatar: string;
   };
 };
@@ -48,7 +48,7 @@ function SidebarUser({ user }: SidebarUserProps) {
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate text-xs">{user.username}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -67,7 +67,7 @@ function SidebarUser({ user }: SidebarUserProps) {
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate text-xs">{user.username}</span>
                 </div>
               </div>
             </DropdownMenuLabel>

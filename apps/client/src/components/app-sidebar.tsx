@@ -17,7 +17,7 @@ interface AppSidebarProps {
   type: "ADMIN";
   user: {
     name: string;
-    email: string;
+    username: string;
     avatar: string;
   };
   items: {
