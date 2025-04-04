@@ -24,6 +24,13 @@ enum UserType {
   STUDENT
 }
 
+enum SocialMedia {
+  FACEBOOK
+  INSTAGRAM
+  TWITTER
+  LINKEDIN
+}
+
 model Role {
   id   String @id @default(uuid())
   name String @unique
@@ -59,10 +66,11 @@ model User {
   username String   @unique
   password String
 
+  socials  Socials[]
   roleId   String?
   schoolId String?
-  role     Role?   @relation(fields: [roleId], references: [id])
-  school   School? @relation("UserSchool", fields: [schoolId], references: [id])
+  role     Role?     @relation(fields: [roleId], references: [id])
+  school   School?   @relation("UserSchool", fields: [schoolId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -71,13 +79,38 @@ model User {
 }
 
 model School {
-  id   String @id @default(uuid())
-  name String
+  id           String  @id @default(uuid())
+  name         String
+  description  String?
+  website      String?
+  contactEmail String?
+  supportEmail String?
+  address      String?
+  phoneNumber  String?
 
-  users User[] @relation("UserSchool")
+  socials Socials[]
+  users   User[]    @relation("UserSchool")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("schools")
+}
+
+model Socials {
+  id   String      @id @default(uuid())
+  type SocialMedia
+  link String
+
+  userId   String?
+  schoolId String?
+  user     User?   @relation(fields: [userId], references: [id])
+  school   School? @relation(fields: [schoolId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, type])
+  @@unique([schoolId, type])
+  @@map("socials")
 }
