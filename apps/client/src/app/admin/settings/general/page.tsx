@@ -20,7 +20,6 @@ import {
   FormLabel,
 } from "@workspace/ui/components/form";
 import { Input } from "@workspace/ui/components/input";
-import { type } from "os";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
