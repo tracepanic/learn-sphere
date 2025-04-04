@@ -20,6 +20,7 @@ import {
   FormLabel,
 } from "@workspace/ui/components/form";
 import { Input } from "@workspace/ui/components/input";
+import { type } from "os";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -28,6 +29,8 @@ import { z } from "zod";
 type GetGeneralSettingsRes = {
   name: string;
 };
+
+type UpdateGeneralSettingsRes = GetGeneralSettingsRes & {};
 
 const schema = z.object({
   name: z.string().min(5).max(255),
@@ -65,6 +68,22 @@ export default function Page() {
     })();
   }, []);
 
+  const onSubmit = async (data: z.infer<typeof schema>) => {
+    await apiRequest<z.infer<typeof schema>, UpdateGeneralSettingsRes>({
+      url: await constructUrl("/settings/admin/general"),
+      method: "PUT",
+      data,
+      loadingMessage: "Updating general settings...",
+      successMessage: "Settings updated successfully!",
+      errorMessage: "Failed to update settings",
+      onSuccess: (data) => {
+        setData(data);
+        form.reset({ name: data.name });
+      },
+      onError: () => null,
+    });
+  };
+
   if (error) {
     return null;
   }
@@ -87,7 +106,7 @@ export default function Page() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form className="space-y-5">
+            <form className="space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
                 name="name"

@@ -25,11 +25,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-type LoginRequest = {
-  username: string;
-  password: string;
-};
-
 type LoginResponse = {
   name: string;
   username: string;
@@ -56,7 +51,7 @@ export default function Page() {
   });
 
   const onSubmit = async (values: z.infer<typeof schema>) => {
-    await apiRequest<LoginRequest, LoginResponse>({
+    await apiRequest<z.infer<typeof schema>, LoginResponse>({
       url: await constructUrl("auth/login"),
       method: "POST",
       data: values,
