@@ -7,6 +7,7 @@ import { cookies } from "next/headers";
 export type UserSession = {
   id: string;
   name: string;
+  username: string;
   type: "ADMIN" | "TEACHER" | "STUDENT";
 };
 
@@ -17,6 +18,7 @@ export type Session = {
 
 export type CreateSession = {
   name: string;
+  username: string;
   accessInfo: string;
   accessToken: string;
 };
@@ -40,6 +42,7 @@ export async function createSession(data: CreateSession) {
     accessToken: data.accessToken,
     user: {
       id: res.userId,
+      username: data.username,
       name: data.name,
       type: res.type,
     },
