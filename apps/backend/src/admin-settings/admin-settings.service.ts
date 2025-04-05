@@ -26,7 +26,7 @@ export class AdminSettingsService {
 
   async updateGeneralSettings(
     dto: UpdateGeneralSettingsDto,
-  ): Promise<UpdateGeneralSettigsRes> {
+  ): Promise<UpdateGeneralSettingsRes> {
     const school = await this.schoolService.findFirst();
     if (!school) throw new NotFoundException('School not found');
 
