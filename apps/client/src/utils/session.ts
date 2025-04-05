@@ -1,6 +1,7 @@
 "use server";
 
 import { env } from "@/env/server";
+import { UserType } from "@workspace/db";
 import { jwtVerify, SignJWT } from "jose";
 import { cookies } from "next/headers";
 
@@ -8,7 +9,7 @@ export type UserSession = {
   id: string;
   name: string;
   username: string;
-  type: "ADMIN" | "TEACHER" | "STUDENT";
+  type: UserType;
 };
 
 export type Session = {
@@ -25,7 +26,7 @@ export type CreateSession = {
 
 type DecodeAccessInfoRes = {
   userId: string;
-  type: "ADMIN" | "TEACHER" | "STUDENT";
+  type: UserType;
 };
 
 const encodedKey = new TextEncoder().encode(env.SESSION_SECRET_KEY);

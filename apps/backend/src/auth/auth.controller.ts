@@ -6,7 +6,7 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { User } from '@workspace/db';
 import { Request as RequestType } from 'express';
 import { AuthService } from 'src/auth/auth.service';
 import { LocalAuthenticationGuard } from 'src/auth/guards/local.guard';

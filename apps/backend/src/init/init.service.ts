@@ -1,5 +1,5 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { PermissionAction, PermissionResource, UserType } from '@prisma/client';
+import { PermissionAction, PermissionResource, UserType } from '@workspace/db';
 import { AuthService } from 'src/auth/auth.service';
 import { InitRequestDto } from 'src/init/dto/request.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
