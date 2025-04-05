@@ -4,4 +4,4 @@ export class GetGeneralSettingsRes {
   readonly website: string | null;
 }
 
-export class UpdateGeneralSettigsRes extends GetGeneralSettingsRes {}
+export class UpdateGeneralSettingsRes extends GetGeneralSettingsRes {}
