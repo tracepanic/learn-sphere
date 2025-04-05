@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import {
   GetGeneralSettingsRes,
-  UpdateGeneralSettigsRes,
+  UpdateGeneralSettingsRes,
 } from 'src/admin-settings/dto/response.dto';
 import { UpdateGeneralSettingsDto } from 'src/admin-settings/dto/request.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
