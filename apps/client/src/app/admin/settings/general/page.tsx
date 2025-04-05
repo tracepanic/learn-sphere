@@ -20,6 +20,7 @@ import {
   FormLabel,
 } from "@workspace/ui/components/form";
 import { Input } from "@workspace/ui/components/input";
+import { Textarea } from "@workspace/ui/components/textarea";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -27,10 +28,16 @@ import { z } from "zod";
 
 type GetGeneralSettingsRes = {
   name: string;
+  description: string | null;
+  website: string | null;
 };
+
+type UpdateGeneralSettingsRes = GetGeneralSettingsRes & {};
 
 const schema = z.object({
   name: z.string().min(5).max(255),
+  description: z.string().min(15).max(500),
+  website: z.string().url().min(5).max(255),
 });
 
 export default function Page() {
@@ -42,6 +49,8 @@ export default function Page() {
     resolver: zodResolver(schema),
     defaultValues: {
       name: data ? data.name : "",
+      description: data ? (data.description ?? "") : "",
+      website: data ? (data.website ?? "") : "",
     },
   });
 
@@ -53,7 +62,11 @@ export default function Page() {
         silent: true,
         onSuccess: (data) => {
           setData(data);
-          form.reset({ name: data.name });
+          form.reset({
+            name: data.name,
+            description: data.description ?? "",
+            website: data.website ?? "",
+          });
         },
         onError: (error) => {
           setError(error);
@@ -64,6 +77,26 @@ export default function Page() {
       setLoading(false);
     })();
   }, []);
+
+  const onSubmit = async (data: z.infer<typeof schema>) => {
+    await apiRequest<z.infer<typeof schema>, UpdateGeneralSettingsRes>({
+      url: await constructUrl("/settings/admin/general"),
+      method: "PUT",
+      data,
+      loadingMessage: "Updating general settings...",
+      successMessage: "Settings updated successfully!",
+      errorMessage: "Failed to update settings",
+      onSuccess: (data) => {
+        setData(data);
+        form.reset({
+          name: data.name,
+          description: data.description ?? "",
+          website: data.website ?? "",
+        });
+      },
+      onError: () => null,
+    });
+  };
 
   if (error) {
     return null;
@@ -87,7 +120,7 @@ export default function Page() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form className="space-y-5">
+            <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
                 control={form.control}
                 name="name"
@@ -105,10 +138,40 @@ export default function Page() {
                 )}
               />
 
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>School Description</FormLabel>
+                    <FormControl>
+                      <Textarea className="max-w-lg" {...field}></Textarea>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="website"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Website URL</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="https://example.com"
+                        className="max-w-lg"
+                        {...field}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
               <Button
                 type="submit"
                 disabled={form.formState.isSubmitting}
-                className="w-full sm:w-fit mt-5"
+                className="w-full sm:w-44 mt-5"
               >
                 Update
               </Button>

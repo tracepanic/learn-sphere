@@ -25,15 +25,11 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-type LoginRequest = {
-  username: string;
-  password: string;
-};
-
 type LoginResponse = {
-  readonly name: string;
-  readonly accessInfo: string;
-  readonly accessToken: string;
+  name: string;
+  username: string;
+  accessInfo: string;
+  accessToken: string;
 };
 
 const schema = z.object({
@@ -55,7 +51,7 @@ export default function Page() {
   });
 
   const onSubmit = async (values: z.infer<typeof schema>) => {
-    await apiRequest<LoginRequest, LoginResponse>({
+    await apiRequest<z.infer<typeof schema>, LoginResponse>({
       url: await constructUrl("auth/login"),
       method: "POST",
       data: values,
@@ -65,6 +61,7 @@ export default function Page() {
       onSuccess: async (data) => {
         await createSession({
           name: data.name,
+          username: data.username,
           accessInfo: data.accessInfo,
           accessToken: data.accessToken,
         });

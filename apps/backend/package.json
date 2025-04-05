@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "prisma generate --no-engine && nest build",
+    "build": "nest build",
     "clean": "rm -rf node_modules/ .turbo/ dist/",
     "check-types": "tsc --noEmit",
     "dev": "nest start --watch",
@@ -13,13 +13,13 @@
     "update": "pnpm update --latest"
   },
   "dependencies": {
+    "@workspace/db": "workspace:*",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.1",
-    "@prisma/client": "6.5.0",
     "argon2": "^0.41.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
@@ -51,7 +51,6 @@
     "eslint-plugin-prettier": "^5.2.2",
     "globals": "^16.0.0",
     "jest": "^29.7.0",
-    "prisma": "6.5.0",
     "source-map-support": "^0.5.21",
     "supertest": "^7.0.0",
     "ts-jest": "^29.2.5",

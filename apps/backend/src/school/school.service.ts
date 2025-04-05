@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { School } from '@workspace/db';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -7,5 +8,9 @@ export class SchoolService {
 
   async countAll(): Promise<number> {
     return this.prisma.school.count();
+  }
+
+  async findFirst(): Promise<School | null> {
+    return this.prisma.school.findFirst();
   }
 }

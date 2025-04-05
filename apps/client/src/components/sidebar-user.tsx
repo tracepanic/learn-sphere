@@ -1,5 +1,6 @@
 "use client";
 
+import { getInitials } from "@/utils/general";
 import {
   Avatar,
   AvatarFallback,
@@ -25,7 +26,7 @@ import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from "lucide-react";
 type SidebarUserProps = {
   user: {
     name: string;
-    email: string;
+    username: string;
     avatar: string;
   };
 };
@@ -44,11 +45,13 @@ function SidebarUser({ user }: SidebarUserProps) {
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">
+                  {getInitials(user.name)}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate text-xs">{user.username}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -63,11 +66,13 @@ function SidebarUser({ user }: SidebarUserProps) {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">
+                    {getInitials(user.name)}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate text-xs">{user.username}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
