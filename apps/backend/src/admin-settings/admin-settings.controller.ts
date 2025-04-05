@@ -12,7 +12,7 @@ import { AdminSettingsService } from 'src/admin-settings/admin-settings.service'
 import { Permissions } from 'src/auth/decorators/permissions.decorator';
 import { AuthenticationGuard } from 'src/auth/guards/authentication.guard';
 import { AuthorizationGuard } from 'src/auth/guards/authorization.guard';
-import { UpdateGeneralSettingsDto } from './dto/request.dto';
+import { UpdateGeneralSettingsDto } from 'src/admin-settings/dto/request.dto';
 
 @Controller('settings/admin')
 export class AdminSettingsController {
