@@ -7,12 +7,12 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { PermissionAction, PermissionResource } from '@prisma/client';
 import { AdminSettingsService } from 'src/admin-settings/admin-settings.service';
 import { Permissions } from 'src/auth/decorators/permissions.decorator';
 import { AuthenticationGuard } from 'src/auth/guards/authentication.guard';
 import { AuthorizationGuard } from 'src/auth/guards/authorization.guard';
 import { UpdateGeneralSettingsDto } from 'src/admin-settings/dto/request.dto';
+import { PermissionAction, PermissionResource } from '@workspace/db';
 
 @Controller('settings/admin')
 export class AdminSettingsController {

@@ -1,9 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { PermissionAction, PermissionResource, User } from '@prisma/client';
+import { PermissionAction, PermissionResource, User } from '@workspace/db';
 import * as argon2 from 'argon2';
-import { SignJWT } from 'jose';
 import { LoginResDto } from 'src/auth/dto/response.dto';
 import { JwtPayload } from 'src/auth/types';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -51,6 +50,8 @@ export class AuthService {
   }
 
   async encodeAccessInfo(userId: string, type: string): Promise<string> {
+    const { SignJWT } = await import('jose');
+
     const payload = { userId, type };
     const key = new TextEncoder().encode(
       this.configService.get<string>('SHARED_JWT_SECRET'),

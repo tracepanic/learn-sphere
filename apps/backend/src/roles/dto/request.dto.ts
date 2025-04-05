@@ -1,4 +1,4 @@
-import { PermissionAction, PermissionResource } from '@prisma/client';
+import { PermissionAction, PermissionResource } from '@workspace/db';
 import { Type } from 'class-transformer';
 import {
   ArrayUnique,
