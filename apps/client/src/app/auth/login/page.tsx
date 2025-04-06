@@ -28,7 +28,6 @@ import { z } from "zod";
 type LoginResponse = {
   name: string;
   username: string;
-  accessInfo: string;
   accessToken: string;
 };
 
@@ -62,7 +61,6 @@ export default function Page() {
         await createSession({
           name: data.name,
           username: data.username,
-          accessInfo: data.accessInfo,
           accessToken: data.accessToken,
         });
 

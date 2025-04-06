@@ -1,7 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { PermissionAction, PermissionResource, User } from '@workspace/db';
+import {
+  PermissionAction,
+  PermissionResource,
+  User,
+  UserType,
+} from '@workspace/db';
 import * as argon2 from 'argon2';
 import { LoginResDto } from 'src/auth/dto/response.dto';
 import { JwtPayload } from 'src/auth/types';
@@ -14,7 +18,6 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
     private readonly userService: UserService,
-    private readonly configService: ConfigService,
   ) {}
 
   async login(user: User | null): Promise<LoginResDto> {
@@ -22,8 +25,7 @@ export class AuthService {
     return {
       name: user.name,
       username: user.username,
-      accessInfo: await this.encodeAccessInfo(user.id, user.type),
-      accessToken: await this.jwtSignAuth(user.id),
+      accessToken: await this.jwtSignAuth(user.id, user.type),
     };
   }
 
@@ -43,27 +45,10 @@ export class AuthService {
     return await argon2.verify(hash, password);
   }
 
-  async jwtSignAuth(userId: string): Promise<string> {
-    const payload: JwtPayload = { sub: userId };
+  async jwtSignAuth(userId: string, type: UserType): Promise<string> {
+    const payload: JwtPayload = { sub: userId, type };
 
     return this.jwtService.signAsync(payload);
-  }
-
-  async encodeAccessInfo(userId: string, type: string): Promise<string> {
-    const { SignJWT } = await import('jose');
-
-    const payload = { userId, type };
-    const key = new TextEncoder().encode(
-      this.configService.get<string>('SHARED_JWT_SECRET'),
-    );
-
-    const accessInfo = await new SignJWT(payload)
-      .setIssuedAt()
-      .setExpirationTime('1h')
-      .setProtectedHeader({ alg: 'HS256' })
-      .sign(key);
-
-    return accessInfo;
   }
 
   async getUserPermissions(userId: string): Promise<
