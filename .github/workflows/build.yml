@@ -51,6 +51,6 @@ jobs:
           SITE_URL: "http://localhost:3001"
           SITE_DESCRIPTION: "Learn programming the right way"
           SITE_NAME: "Learn Sphere Academy"
-          SESSION_SECRET_KEY: "random"
-          SHARED_JWT_SECRET: "shared"
+          SESSION_SECRET: "secret"
+          JWT_SECRET: "random"
         run: pnpm --filter=client build

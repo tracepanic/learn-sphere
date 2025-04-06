@@ -20,22 +20,21 @@ export type Session = {
 export type CreateSession = {
   name: string;
   username: string;
-  accessInfo: string;
   accessToken: string;
 };
 
-type DecodeAccessInfoRes = {
+type DecodeAccessTokenRes = {
   userId: string;
   type: UserType;
 };
 
-const encodedKey = new TextEncoder().encode(env.SESSION_SECRET_KEY);
-const sharedKey = new TextEncoder().encode(env.SHARED_JWT_SECRET);
+const sessionSecret = new TextEncoder().encode(env.SESSION_SECRET);
+const jwtSecret = new TextEncoder().encode(env.JWT_SECRET);
 
 export async function createSession(data: CreateSession) {
-  const res = await decodeAcessInfo(data.accessInfo);
+  const res = await decodeAcessToken(data.accessToken);
   if (!res) {
-    console.error("Failed to decode access info");
+    console.error("Failed to decode access token");
     return;
   }
 
@@ -53,7 +52,7 @@ export async function createSession(data: CreateSession) {
     .setIssuedAt()
     .setExpirationTime("7d")
     .setProtectedHeader({ alg: "HS256" })
-    .sign(encodedKey);
+    .sign(sessionSecret);
 
   const expiredAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   const cookieStore = await cookies();
@@ -75,7 +74,7 @@ export async function getSession(): Promise<Session | null> {
   if (!session) return null;
 
   try {
-    const { payload } = await jwtVerify(session, encodedKey, {
+    const { payload } = await jwtVerify(session, sessionSecret, {
       algorithms: ["HS256"],
     });
     return payload as Session;
@@ -90,17 +89,16 @@ export async function deleteSession() {
   (await cookies()).delete("session");
 }
 
-export async function decodeAcessInfo(
-  accessInfo: string,
-): Promise<DecodeAccessInfoRes | null> {
+export async function decodeAcessToken(
+  accessToken: string,
+): Promise<DecodeAccessTokenRes | null> {
   try {
-    const { payload } = await jwtVerify(accessInfo, sharedKey, {
+    const { payload } = await jwtVerify(accessToken, jwtSecret, {
       algorithms: ["HS256"],
     });
-    return payload as DecodeAccessInfoRes;
+    return payload as DecodeAccessTokenRes;
   } catch {
-    console.error("Failed to decode access info");
-    await deleteSession();
+    console.error("Failed to decode access token");
     return null;
   }
 }
