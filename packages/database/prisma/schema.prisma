@@ -37,6 +37,7 @@ model Role {
   name String @unique
 
   users       User[]
+  invites     Invite[]
   permissions Permission[] @relation("RoleToPermission")
 
   createdAt DateTime @default(now())
@@ -67,11 +68,13 @@ model User {
   username String   @unique
   password String
 
+  teacher  Teacher?
+  student  Student?
   socials  Socials[]
   roleId   String?
-  schoolId String?
+  schoolId String
   role     Role?     @relation(fields: [roleId], references: [id])
-  school   School?   @relation("UserSchool", fields: [schoolId], references: [id])
+  school   School    @relation(fields: [schoolId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -89,8 +92,10 @@ model School {
   address      String?
   phoneNumber  String?
 
-  socials Socials[]
-  users   User[]    @relation("UserSchool")
+  socials     Socials[]
+  invites     Invite[]
+  users       User[]
+  classGroups ClassGroup[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -114,4 +119,152 @@ model Socials {
   @@unique([userId, type])
   @@unique([schoolId, type])
   @@map("socials")
+}
+
+model Invite {
+  id        String   @id @default(uuid())
+  email     String
+  type      UserType
+  link      String   @unique
+  used      Boolean  @default(false)
+  expiresAt DateTime
+
+  schoolId String?
+  roleId   String?
+  school   School? @relation(fields: [schoolId], references: [id])
+  role     Role?   @relation(fields: [roleId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([email, schoolId])
+  @@map("invites")
+}
+
+model Teacher {
+  id String @id @default(uuid())
+
+  subjects TeacherSubjectClass[]
+  userId   String                @unique
+  user     User                  @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("teachers")
+}
+
+model Student {
+  id String @id @default(uuid())
+
+  classes StudentClass[]
+  userId  String         @unique
+  user    User           @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("students")
+}
+
+model AcademicYear {
+  id       String   @id @default(uuid())
+  year     String   @unique
+  startsAt DateTime
+  endsAt   DateTime
+
+  classInstances ClassInstance[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("academic_years")
+}
+
+model ClassGroup {
+  id   String @id @default(uuid())
+  name String
+
+  instances ClassInstance[]
+  schoolId  String
+  school    School          @relation(fields: [schoolId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("class_groups")
+}
+
+model ClassInstance {
+  id String @id @default(uuid())
+
+  students       StudentClass[]
+  subjects       SubjectClass[]
+  academicYearId String
+  classGroupId   String
+  academicYear   AcademicYear   @relation(fields: [academicYearId], references: [id])
+  classGroup     ClassGroup     @relation(fields: [classGroupId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([academicYearId, classGroupId])
+  @@map("class_instances")
+}
+
+model Subject {
+  id   String @id @default(uuid())
+  name String @unique
+
+  subjectClasses SubjectClass[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("subjects")
+}
+
+model SubjectClass {
+  id String @id @default(uuid())
+
+  teachers        TeacherSubjectClass[]
+  subjectId       String
+  classInstanceId String
+  subject         Subject               @relation(fields: [subjectId], references: [id])
+  classInstace    ClassInstance         @relation(fields: [classInstanceId], references: [id])
+
+  @@unique([subjectId, classInstanceId])
+  @@map("subject_classes")
+}
+
+model TeacherSubjectClass {
+  id String @id @default(uuid())
+
+  teacherId      String
+  subjectClassId String
+  teacher        Teacher      @relation(fields: [teacherId], references: [id])
+  subjectClass   SubjectClass @relation(fields: [subjectClassId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([teacherId, subjectClassId])
+  @@map("teacher_subject_classes")
+}
+
+model StudentClass {
+  id       String    @id @default(uuid())
+  joinedAt DateTime  @default(now())
+  leftAt   DateTime?
+
+  studentId       String
+  classInstanceId String
+  student         Student       @relation(fields: [studentId], references: [id])
+  classInstance   ClassInstance @relation(fields: [classInstanceId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([studentId, classInstanceId])
+  @@map("student_classes")
 }
