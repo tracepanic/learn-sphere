@@ -13,7 +13,7 @@ interface ApiOptions<TData, TResponse> {
   errorMessage?: string;
   onSuccess?: (data: TResponse) => void;
   onError?: (error: string) => void;
-  silent?: boolean; // Silent skips toast notifications
+  silent?: boolean; // Skips toast notifications
 }
 
 interface ApiResponse<T> {
@@ -30,7 +30,7 @@ export async function apiRequest<TData, TResponse>({
   headers = {},
   loadingMessage = "Loading...",
   successMessage = "Success",
-  errorMessage = "An error occurred",
+  errorMessage = "Something went wrong",
   onSuccess,
   onError,
   silent = false,
