@@ -51,12 +51,11 @@ export default function Page() {
 
   const onSubmit = async (values: z.infer<typeof schema>) => {
     await apiRequest<z.infer<typeof schema>, LoginResponse>({
-      url: await constructUrl("auth/login"),
+      url: await constructUrl("/auth/login"),
       method: "POST",
       data: values,
       loadingMessage: "Logging in...",
       successMessage: "Login successful",
-      errorMessage: "Something went wrong",
       onSuccess: async (data) => {
         await createSession({
           name: data.name,
