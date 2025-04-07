@@ -231,7 +231,7 @@ model SubjectClass {
   subjectId       String
   classInstanceId String
   subject         Subject               @relation(fields: [subjectId], references: [id])
-  classInstace    ClassInstance         @relation(fields: [classInstanceId], references: [id])
+  classInstance    ClassInstance         @relation(fields: [classInstanceId], references: [id])
 
   @@unique([subjectId, classInstanceId])
   @@map("subject_classes")
