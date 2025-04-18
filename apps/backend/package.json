@@ -13,12 +13,12 @@
     "update": "pnpm update --latest"
   },
   "dependencies": {
-    "@nestjs/common": "^11.0.13",
+    "@nestjs/common": "^11.0.20",
     "@nestjs/config": "^4.0.2",
-    "@nestjs/core": "^11.0.13",
+    "@nestjs/core": "^11.0.20",
     "@nestjs/jwt": "^11.0.0",
     "@nestjs/passport": "^11.0.5",
-    "@nestjs/platform-express": "^11.0.13",
+    "@nestjs/platform-express": "^11.0.20",
     "@workspace/db": "workspace:*",
     "argon2": "^0.41.1",
     "class-transformer": "^0.5.1",
@@ -31,23 +31,23 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.24.0",
+    "@eslint/js": "^9.25.0",
     "@nestjs/cli": "^11.0.6",
-    "@nestjs/schematics": "^11.0.3",
-    "@swc/cli": "^0.7.0",
-    "@swc/core": "^1.11.16",
+    "@nestjs/schematics": "^11.0.5",
+    "@swc/cli": "^0.7.3",
+    "@swc/core": "^1.11.21",
     "@types/express": "^5.0.1",
-    "@types/node": "^22.14.0",
+    "@types/node": "^22.14.1",
     "@types/passport-jwt": "^4.0.1",
     "@types/passport-local": "^1.0.38",
     "eslint": "^9.24.0",
-    "eslint-config-prettier": "^10.1.1",
+    "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-prettier": "^5.2.6",
     "globals": "^16.0.0",
     "source-map-support": "^0.5.21",
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
-    "typescript-eslint": "^8.29.0"
+    "typescript-eslint": "^8.30.1"
   }
 }
