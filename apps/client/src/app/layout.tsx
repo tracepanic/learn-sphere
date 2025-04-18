@@ -22,7 +22,7 @@ export async function generateMetadata() {
 
   return {
     description: data.data.description,
-    metadataBase: new URL(process.env.SITE_URL || ""),
+    metadataBase: new URL(env.SITE_URL),
     keywords: [],
     generator: "Next.js",
     applicationName: data.data.name,
@@ -43,7 +43,7 @@ export async function generateMetadata() {
       "msapplication-TileColor": "#fff",
     },
     twitter: {
-      site: process.env.SITE_URL || "",
+      site: env.SITE_URL,
     },
     alternates: {
       canonical: "./",
