@@ -6,8 +6,8 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class UserService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async countAll(): Promise<number> {
-    return this.prisma.user.count();
+  async findFirst(): Promise<User | null> {
+    return this.prisma.user.findFirst();
   }
 
   async getByUsername(username: string): Promise<User | null> {

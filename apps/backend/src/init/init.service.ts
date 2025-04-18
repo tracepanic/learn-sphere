@@ -16,12 +16,12 @@ export class InitService {
   ) {}
 
   async shouldInit(): Promise<boolean> {
-    const [users, schools] = await Promise.all([
-      this.userService.countAll(),
-      this.schoolService.countAll(),
+    const [user, school] = await Promise.all([
+      this.userService.findFirst(),
+      this.schoolService.findFirst(),
     ]);
 
-    if (users >= 1 || schools >= 1) {
+    if (user || school) {
       return false;
     }
 
