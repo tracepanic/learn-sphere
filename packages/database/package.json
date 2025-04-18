@@ -19,6 +19,6 @@
     "prisma": "6.6.0"
   },
   "exports": {
-    ".": "./generated/client/index.js"
+    ".": "./dist/index.js"
   }
 }

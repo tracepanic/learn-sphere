@@ -19,9 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "moduleResolution": "Node16",
     "paths": {
-      "@workspace/db": [
-        "../packages/database/generated/client"
-      ]
+      "@workspace/db": ["../packages/database/dist"]
     }
   }
 }
