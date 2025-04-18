@@ -16,12 +16,12 @@ import { Suspense } from "react";
 export default function Page() {
   return (
     <Suspense fallback={<Loader />}>
-      <Unauthorised />
+      <Unauthorized />
     </Suspense>
   );
 }
 
-function Unauthorised() {
+function Unauthorized() {
   const searchParams = useSearchParams();
   const origin = searchParams.get("origin") || "/";
 
